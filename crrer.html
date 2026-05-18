@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Compass - Find Your Direction</title>
+
+  <style>
+    :root {
+      --bg: #fbfefb;
+      --surface: #ffffff;
+      --surface-soft: #f1fbf0;
+      --surface-mint: #e9f8e7;
+      --accent: #7ed957;
+      --accent-strong: #54bf3b;
+      --accent-deep: #238b43;
+      --mint: #c9f4d0;
+      --grey-50: #f7f8f6;
+      --grey-100: #edf1ec;
+      --grey-300: #d8ded6;
+      --text: #172018;
+      --text-soft: #526055;
+      --shadow: 0 18px 50px rgba(38, 112, 58, 0.12);
+      --shadow-soft: 0 12px 34px rgba(35, 85, 45, 0.08);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --transition: 220ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(126, 217, 87, 0.18), transparent 34rem),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 48%, #f6fbf5 100%);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shine {
+      from {
+        transform: translateX(-120%);
+      }
+      to {
+        transform: translateX(120%);
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.55s ease forwards;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px clamp(18px, 5vw, 54px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(216, 222, 214, 0.88);
+      box-shadow: 0 10px 30px rgba(37, 74, 44, 0.06);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      color: var(--text);
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .nav-logo span {
+      color: var(--accent-strong);
+    }
+
+    .nav-tagline {
+      color: var(--text-soft);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    #section-hero {
+      display: grid;
+      place-items: center;
+      min-height: calc(100vh - 69px);
+      padding: 72px 20px 64px;
+      text-align: center;
+    }
+
+    .hero-shell {
+      width: min(920px, 100%);
+    }
+
+    .hero-badge,
+    .skill-tag,
+    .result-field {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .hero-badge {
+      margin-bottom: 24px;
+      padding: 8px 18px;
+      color: var(--accent-deep);
+      background: rgba(233, 248, 231, 0.92);
+      border: 1px solid rgba(126, 217, 87, 0.34);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-title {
+      margin-bottom: 18px;
+      font-size: clamp(3rem, 8vw, 6.2rem);
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: 0;
+      color: var(--text);
+    }
+
+    .hero-title span {
+      color: var(--accent-strong);
+    }
+
+    .hero-subtitle {
+      max-width: 680px;
+      margin: 0 auto 34px;
+      color: var(--text-soft);
+      font-size: clamp(1rem, 2.4vw, 1.24rem);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      width: min(680px, 100%);
+      margin: 0 auto 36px;
+    }
+
+    .metric {
+      padding: 14px 16px;
+      border: 1px solid rgba(126, 217, 87, 0.24);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--accent-deep);
+      font-size: 1.1rem;
+    }
+
+    .metric span {
+      color: var(--text-soft);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .btn-primary,
+    .btn-next,
+    .btn-secondary {
+      position: relative;
+      overflow: hidden;
+      border: 0;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent) 0%, #61cf62 46%, var(--accent-strong) 100%);
+      box-shadow: 0 14px 28px rgba(84, 191, 59, 0.24);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+    }
+
+    .btn-primary::after,
+    .btn-next::after,
+    .btn-secondary::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+      transform: translateX(-120%);
+    }
+
+    .btn-primary:hover,
+    .btn-next:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(84, 191, 59, 0.28);
+      filter: saturate(1.05);
+    }
+
+    .btn-primary:hover::after,
+    .btn-next:hover::after,
+    .btn-secondary:hover::after {
+      animation: shine 0.75s ease;
+    }
+
+    .btn-primary {
+      min-width: 190px;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-size: 1.02rem;
+      font-weight: 800;
+    }
+
+    .section-wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 58px 20px 28px;
+      text-align: center;
+    }
+
+    .section-title {
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: clamp(1.7rem, 4vw, 2.25rem);
+      font-weight: 850;
+      line-height: 1.18;
+    }
+
+    .section-title span {
+      color: var(--accent-strong);
+    }
+
+    .section-desc {
+      color: var(--text-soft);
+      font-size: 0.98rem;
+    }
+
+    #section-quiz,
+    #section-result {
+      padding: 38px 20px 84px;
+    }
+
+    .progress-bar-wrap {
+      width: min(960px, 100%);
+      height: 10px;
+      margin: 0 auto 28px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--grey-100);
+      box-shadow: inset 0 1px 2px rgba(31, 50, 34, 0.08);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #b8f19e, var(--accent-strong));
+      box-shadow: 0 0 18px rgba(126, 217, 87, 0.58);
+      transition: width 0.45s ease;
+    }
+
+    .quiz-card,
+    .result-card,
+    .skill-box {
+      width: min(960px, 100%);
+      margin: 0 auto;
+      border: 1px solid rgba(216, 222, 214, 0.82);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 255, 246, 0.88)),
+        var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .quiz-card {
+      padding: clamp(24px, 4vw, 42px);
+      transition: opacity 0.35s ease, transform 0.35s ease, box-shadow var(--transition);
+    }
+
+    .quiz-card:hover,
+    .result-card:hover,
+    .skill-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 58px rgba(38, 112, 58, 0.15);
+    }
+
+    .question-number {
+      margin-bottom: 10px;
+      color: var(--accent-deep);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      margin-bottom: 26px;
+      color: var(--text);
+      font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+      font-weight: 780;
+      line-height: 1.35;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-height: 74px;
+      padding: 16px 18px;
+      color: var(--text-soft);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--grey-300);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 18px rgba(28, 55, 31, 0.04);
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition), color var(--transition);
+    }
+
+    .option-label:hover {
+      color: var(--text);
+      border-color: rgba(126, 217, 87, 0.72);
+      background: #f8fff7;
+      box-shadow: 0 12px 26px rgba(84, 191, 59, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .option-label input[type="radio"] {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--accent-strong);
+      cursor: pointer;
+    }
+
+    .option-label span {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .option-label.selected {
+      color: var(--text);
+      border-color: var(--accent-strong);
+      background: linear-gradient(135deg, rgba(233, 248, 231, 0.98), rgba(255, 255, 255, 0.96));
+      box-shadow: 0 14px 32px rgba(84, 191, 59, 0.18);
+    }
+
+    .quiz-nav {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .btn-outline {
+      min-width: 108px;
+      padding: 11px 22px;
+      color: var(--text-soft);
+      background: #ffffff;
+      border: 1px solid var(--grey-300);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 750;
+      transition: transform var(--transition), border-color var(--transition), color var(--transition), background var(--transition);
+    }
+
+    .btn-outline:hover {
+      color: var(--accent-deep);
+      border-color: var(--accent);
+      background: var(--surface-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn-next {
+      min-width: 112px;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .step-info {
+      min-height: 22px;
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .step-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+      border-radius: 999px;
+      background: var(--grey-300);
+      transition: transform var(--transition), background var(--transition), width var(--transition);
+    }
+
+    .step-dot.active {
+      width: 22px;
+      background: var(--accent-strong);
+    }
+
+    .step-dot.done {
+      background: var(--accent);
+    }
+
+    .result-card {
+      max-width: 920px;
+      padding: clamp(28px, 5vw, 48px);
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .result-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin-bottom: 18px;
+      color: var(--accent-deep);
+      background: linear-gradient(135deg, var(--surface-mint), #ffffff);
+      border: 1px solid rgba(126, 217, 87, 0.42);
+      border-radius: 22px;
+      font-size: 1.95rem;
+      font-weight: 900;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .result-field {
+      margin-bottom: 8px;
+      padding: 6px 14px;
+      color: var(--accent-deep);
+      background: var(--surface-soft);
+      border: 1px solid rgba(126, 217, 87, 0.3);
+    }
+
+    .result-title {
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.08;
+    }
+
+    .compatibility {
+      width: min(440px, 100%);
+      margin: 0 auto 24px;
+      text-align: left;
+    }
+
+    .compatibility-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .compatibility-head strong {
+      color: var(--accent-deep);
+      font-size: 1.2rem;
+    }
+
+    .compatibility-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--grey-100);
+    }
+
+    .compatibility-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+      transition: width 0.7s ease;
+    }
+
+    .result-roles,
+    .result-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .result-roles {
+      margin-bottom: 24px;
+    }
+
+    .role-badge,
+    .detail-pill {
+      border-radius: 999px;
+      background: var(--surface-soft);
+      border: 1px solid rgba(126, 217, 87, 0.28);
+      color: var(--accent-deep);
+      font-size: 0.84rem;
+      font-weight: 750;
+    }
+
+    .role-badge {
+      padding: 7px 15px;
+    }
+
+    .result-quote {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      padding: 18px 20px;
+      color: var(--text-soft);
+      background: rgba(247, 248, 246, 0.82);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      text-align: left;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 26px 0 30px;
+      text-align: left;
+    }
+
+    .result-panel {
+      padding: 20px;
+      border: 1px solid var(--grey-300);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .result-panel h3 {
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .result-panel ul {
+      display: grid;
+      gap: 9px;
+      padding-left: 18px;
+      color: var(--text-soft);
+      font-size: 0.94rem;
+    }
+
+    .btn-secondary {
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    #section-skill {
+      padding: 0 20px 84px;
+    }
+
+    .skill-box {
+      max-width: 720px;
+      padding: 30px;
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .skill-tag {
+      margin-bottom: 14px;
+      padding: 6px 14px;
+      color: var(--accent-deep);
+      background: var(--surface-soft);
+      border: 1px solid rgba(126, 217, 87, 0.28);
+    }
+
+    .skill-text {
+      color: var(--text);
+      font-size: 1.18rem;
+      font-weight: 800;
+    }
+
+    .skill-hint {
+      max-width: 560px;
+      margin: 8px auto 0;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    footer {
+      padding: 28px 20px;
+      color: var(--text-soft);
+      border-top: 1px solid var(--grey-100);
+      background: #ffffff;
+      text-align: center;
+      font-size: 0.86rem;
+    }
+
+    footer span {
+      color: var(--accent-strong);
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      #section-hero {
+        min-height: auto;
+        padding-top: 56px;
+      }
+
+      .hero-metrics,
+      .options-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-nav {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .step-info {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-tagline {
+        font-size: 0.76rem;
+      }
+
+      .quiz-card,
+      .result-card,
+      .skill-box {
+        border-radius: 18px;
+      }
+
+      .option-label {
+        min-height: auto;
+        padding: 14px;
+      }
+
+      .quiz-nav {
+        gap: 12px;
+      }
+
+      .btn-outline,
+      .btn-next {
+        width: 100%;
+        min-width: 0;
+        padding-inline: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Career<span>Compass</span></div>
+    <div class="nav-tagline">Smart career guidance for students</div>
+  </nav>
+
+  <section id="section-hero">
+    <div class="hero-shell fade-in">
+      <div class="hero-badge">Free career quiz</div>
+      <h1 class="hero-title">Career <span>Compass</span></h1>
+      <p class="hero-subtitle">Answer a thoughtful set of questions and get a career direction with compatibility, role ideas, skills, and a practical learning path.</p>
+      <div class="hero-metrics" aria-label="Quiz highlights">
+        <div class="metric"><strong>8</strong><span>Career fields</span></div>
+        <div class="metric"><strong>8</strong><span>Smart questions</span></div>
+        <div class="metric"><strong>64</strong><span>Detailed choices</span></div>
+      </div>
+      <button class="btn-primary" onclick="startQuiz()">Start Quiz</button>
+    </div>
+  </section>
+
+  <section id="section-quiz" class="hidden">
+    <div class="progress-bar-wrap" aria-label="Quiz progress">
+      <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+    </div>
+
+    <div class="quiz-card fade-in" id="quiz-card">
+      <div class="question-number" id="q-number">Question 1 of 8</div>
+      <div class="question-text" id="q-text">Loading...</div>
+      <div class="options-grid" id="q-options"></div>
+      <div class="quiz-nav">
+        <button class="btn-outline" id="btn-back" onclick="goBack()">Back</button>
+        <div class="step-info" id="step-dots"></div>
+        <button class="btn-next" id="btn-next" onclick="goNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-result" class="hidden">
+    <div class="section-wrapper">
+      <div class="section-title">Your Career Match <span>Result</span></div>
+      <p class="section-desc">Based on your strongest interests, work style, and problem-solving patterns.</p>
+    </div>
+
+    <div class="result-card fade-in" id="result-card">
+      <div class="result-icon" id="result-icon">AI</div>
+      <div class="result-field" id="result-field">Career Field</div>
+      <div class="result-title" id="result-title">Career Direction</div>
+      <div class="compatibility">
+        <div class="compatibility-head">
+          <span>Career compatibility</span>
+          <strong id="compatibility-score">0%</strong>
+        </div>
+        <div class="compatibility-track">
+          <div class="compatibility-fill" id="compatibility-fill"></div>
+        </div>
+      </div>
+      <div class="result-roles" id="result-roles"></div>
+      <p class="result-quote" id="result-quote"></p>
+      <div class="result-grid">
+        <div class="result-panel">
+          <h3>Suggested skills</h3>
+          <ul id="result-skills"></ul>
+        </div>
+        <div class="result-panel">
+          <h3>Learning path</h3>
+          <ul id="result-path"></ul>
+        </div>
+      </div>
+      <button class="btn-secondary" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+  </section>
+
+  <section id="section-skill" class="hidden">
+    <div class="section-wrapper">
+      <div class="section-title">Today's <span>Skill to Try</span></div>
+      <p class="section-desc">A small next step matched to your result.</p>
+    </div>
+    <div class="skill-box fade-in">
+      <div class="skill-tag">Daily challenge</div>
+      <div class="skill-text" id="skill-text"></div>
+      <div class="skill-hint" id="skill-hint"></div>
+    </div>
+  </section>
+
+  <footer>
+    Made with <span>care</span> for students | Career Compass (c) 2026
+  </footer>
+
+  <script>
+    var categories = [
+      "aiTech",
+      "designCreativity",
+      "businessEntrepreneurship",
+      "healthcare",
+      "lawGovernment",
+      "educationPsychology",
+      "finance",
+      "mediaCommunication"
+    ];
+
+    var questions = [
+      {
+        text: "Which kind of challenge would you choose for a weekend project?",
+        options: [
+          { label: "Build an app, automate a task, or experiment with AI tools", scores: { aiTech: 5, finance: 1 } },
+          { label: "Design a brand, poster, product mockup, or visual story", scores: { designCreativity: 5, mediaCommunication: 2 } },
+          { label: "Create a small business plan and test how people respond", scores: { businessEntrepreneurship: 5, finance: 2 } },
+          { label: "Volunteer in a clinic, wellness camp, or health awareness drive", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "Debate a public issue and research rules, rights, or policy", scores: { lawGovernment: 5, mediaCommunication: 1 } },
+          { label: "Help someone learn, manage stress, or make a better decision", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "Compare investments, budgets, markets, or money decisions", scores: { finance: 5, businessEntrepreneurship: 2 } },
+          { label: "Plan a podcast, campaign, video, or social media series", scores: { mediaCommunication: 5, designCreativity: 2 } }
+        ]
+      },
+      {
+        text: "What type of problem feels most satisfying to solve?",
+        options: [
+          { label: "A logical system that needs debugging, data, or algorithms", scores: { aiTech: 5, finance: 1 } },
+          { label: "A confusing experience that needs a cleaner visual or user flow", scores: { designCreativity: 5, aiTech: 1 } },
+          { label: "A customer or market gap that could become a useful product", scores: { businessEntrepreneurship: 5, mediaCommunication: 1 } },
+          { label: "A health issue where accurate diagnosis and care matter", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "A fairness, governance, or compliance issue with real consequences", scores: { lawGovernment: 5, finance: 1 } },
+          { label: "A learning, motivation, behavior, or emotional growth challenge", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "A financial tradeoff involving risk, return, and planning", scores: { finance: 5, businessEntrepreneurship: 1 } },
+          { label: "A message that needs to reach the right audience clearly", scores: { mediaCommunication: 5, designCreativity: 1 } }
+        ]
+      },
+      {
+        text: "Which school or college subjects pull your attention most?",
+        options: [
+          { label: "Computer science, maths, robotics, statistics, or AI", scores: { aiTech: 5, finance: 1 } },
+          { label: "Art, design, animation, literature, music, or product thinking", scores: { designCreativity: 5, mediaCommunication: 1 } },
+          { label: "Business studies, marketing, management, or economics", scores: { businessEntrepreneurship: 5, finance: 2 } },
+          { label: "Biology, anatomy, nutrition, medicine, or public health", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "Political science, civics, history, law, or public administration", scores: { lawGovernment: 5, mediaCommunication: 1 } },
+          { label: "Psychology, sociology, teaching, communication, or child development", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "Accounts, commerce, statistics, financial markets, or taxation", scores: { finance: 5, businessEntrepreneurship: 1 } },
+          { label: "Journalism, media studies, public speaking, or digital content", scores: { mediaCommunication: 5, designCreativity: 1 } }
+        ]
+      },
+      {
+        text: "In a team, what role do you naturally take?",
+        options: [
+          { label: "The builder who turns ideas into working systems or prototypes", scores: { aiTech: 5, designCreativity: 1 } },
+          { label: "The visual thinker who makes the work feel polished and intuitive", scores: { designCreativity: 5, mediaCommunication: 1 } },
+          { label: "The organizer who sets goals, finds opportunities, and drives action", scores: { businessEntrepreneurship: 5, lawGovernment: 1 } },
+          { label: "The careful observer who notices people's physical needs and safety", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "The advocate who checks rules, ethics, evidence, and fairness", scores: { lawGovernment: 5, finance: 1 } },
+          { label: "The mentor who helps people understand, improve, and feel supported", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "The analyst who tracks numbers, resources, and smarter choices", scores: { finance: 5, businessEntrepreneurship: 1 } },
+          { label: "The storyteller who explains the work and gets people interested", scores: { mediaCommunication: 5, businessEntrepreneurship: 1 } }
+        ]
+      },
+      {
+        text: "Which work environment sounds most energizing?",
+        options: [
+          { label: "A product lab, AI startup, software team, or research workspace", scores: { aiTech: 5, businessEntrepreneurship: 1 } },
+          { label: "A design studio, creative agency, game team, or content studio", scores: { designCreativity: 5, mediaCommunication: 2 } },
+          { label: "A startup floor, client meeting room, or fast-moving growth team", scores: { businessEntrepreneurship: 5, finance: 1 } },
+          { label: "A hospital, clinic, therapy center, lab, or community health program", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "A courtroom, civil service office, policy team, or public institution", scores: { lawGovernment: 5, mediaCommunication: 1 } },
+          { label: "A classroom, counseling room, training center, or research program", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "A bank, investment firm, audit team, or financial planning office", scores: { finance: 5, businessEntrepreneurship: 1 } },
+          { label: "A newsroom, production house, PR team, or digital media desk", scores: { mediaCommunication: 5, designCreativity: 1 } }
+        ]
+      },
+      {
+        text: "What outcome would make you proud five years from now?",
+        options: [
+          { label: "Creating technology that makes people faster, safer, or smarter", scores: { aiTech: 5, healthcare: 1 } },
+          { label: "Building memorable experiences, visuals, products, or stories", scores: { designCreativity: 5, mediaCommunication: 1 } },
+          { label: "Launching or leading something that grows and creates jobs", scores: { businessEntrepreneurship: 5, finance: 1 } },
+          { label: "Helping people recover, stay healthy, or live with better care", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "Protecting rights, improving systems, or serving the public", scores: { lawGovernment: 5, educationPsychology: 1 } },
+          { label: "Helping learners or clients build confidence and better habits", scores: { educationPsychology: 5, mediaCommunication: 1 } },
+          { label: "Helping people and companies make strong financial decisions", scores: { finance: 5, lawGovernment: 1 } },
+          { label: "Influencing culture through communication, media, or public voice", scores: { mediaCommunication: 5, designCreativity: 1 } }
+        ]
+      },
+      {
+        text: "Which skill would you most like to get excellent at?",
+        options: [
+          { label: "Coding, machine learning, data analysis, or systems thinking", scores: { aiTech: 5, finance: 1 } },
+          { label: "Visual design, UX research, storytelling, or creative direction", scores: { designCreativity: 5, mediaCommunication: 2 } },
+          { label: "Sales, leadership, negotiation, operations, or product strategy", scores: { businessEntrepreneurship: 5, lawGovernment: 1 } },
+          { label: "Clinical knowledge, patient care, biology, or health research", scores: { healthcare: 5, educationPsychology: 1 } },
+          { label: "Legal reasoning, policy analysis, debate, or civic leadership", scores: { lawGovernment: 5, mediaCommunication: 1 } },
+          { label: "Teaching, counseling, behavioral science, or learning design", scores: { educationPsychology: 5, healthcare: 1 } },
+          { label: "Accounting, investing, financial modeling, or risk analysis", scores: { finance: 5, businessEntrepreneurship: 1 } },
+          { label: "Writing, presenting, interviewing, editing, or audience growth", scores: { mediaCommunication: 5, designCreativity: 1 } }
+        ]
+      },
+      {
+        text: "When making decisions, what do you trust most?",
+        options: [
+          { label: "Data, experiments, technical feasibility, and measurable results", scores: { aiTech: 5, finance: 2 } },
+          { label: "Taste, empathy, originality, and whether the experience feels right", scores: { designCreativity: 5, educationPsychology: 1 } },
+          { label: "Opportunity size, customer demand, timing, and execution speed", scores: { businessEntrepreneurship: 5, finance: 1 } },
+          { label: "Evidence, safety, expert guidance, and human wellbeing", scores: { healthcare: 5, lawGovernment: 1 } },
+          { label: "Constitutional values, fairness, rules, and public impact", scores: { lawGovernment: 5, educationPsychology: 1 } },
+          { label: "People's needs, behavior patterns, context, and long-term growth", scores: { educationPsychology: 5, mediaCommunication: 1 } },
+          { label: "Numbers, probability, risk control, and long-term value", scores: { finance: 5, aiTech: 1 } },
+          { label: "Audience insight, clarity, timing, and persuasive communication", scores: { mediaCommunication: 5, businessEntrepreneurship: 1 } }
+        ]
+      }
+    ];
+
+    var results = {
+      aiTech: {
+        icon: "AI",
+        field: "AI & Tech",
+        title: "Technology Builder",
+        roles: ["AI Engineer", "Software Developer", "Data Scientist", "Cybersecurity Analyst"],
+        quote: "You lean toward logic, systems, and invention. You are likely to enjoy careers where ideas become tools, products, and measurable impact.",
+        skills: ["Programming fundamentals", "Data analysis", "AI tool literacy", "Problem decomposition", "Product thinking"],
+        path: ["Learn HTML, CSS, JavaScript, and Python basics", "Build 3 small projects and publish them", "Study data structures, databases, and APIs", "Explore machine learning or cybersecurity specialization"]
+      },
+      designCreativity: {
+        icon: "DC",
+        field: "Design & Creativity",
+        title: "Creative Experience Designer",
+        roles: ["UI/UX Designer", "Brand Designer", "Product Designer", "Creative Director"],
+        quote: "You notice how things look, feel, and communicate. Your strength is turning fuzzy ideas into clear, beautiful, useful experiences.",
+        skills: ["Visual hierarchy", "User research", "Wireframing", "Design systems", "Portfolio storytelling"],
+        path: ["Practice layout, color, typography, and composition", "Recreate 5 strong app or website screens", "Learn Figma and basic UX research", "Create a portfolio with 3 case studies"]
+      },
+      businessEntrepreneurship: {
+        icon: "BE",
+        field: "Business & Entrepreneurship",
+        title: "Growth Strategist",
+        roles: ["Entrepreneur", "Product Manager", "Marketing Manager", "Operations Lead"],
+        quote: "You think in opportunities, people, markets, and execution. You are suited to roles where leadership and smart risk-taking matter.",
+        skills: ["Market research", "Sales and negotiation", "Leadership", "Product strategy", "Operations planning"],
+        path: ["Study business models and customer psychology", "Run a small campus or online project", "Learn marketing funnels and analytics", "Build pitching, budgeting, and team management skills"]
+      },
+      healthcare: {
+        icon: "HC",
+        field: "Healthcare",
+        title: "Health Impact Professional",
+        roles: ["Doctor", "Nurse", "Pharmacist", "Public Health Specialist"],
+        quote: "You are drawn to care, evidence, and human wellbeing. Healthcare paths reward patience, accuracy, compassion, and lifelong learning.",
+        skills: ["Biology fundamentals", "Empathy and communication", "Scientific reasoning", "Attention to detail", "Ethics and safety"],
+        path: ["Strengthen biology, chemistry, and health science basics", "Shadow or interview healthcare professionals", "Volunteer in health or wellbeing programs", "Prepare for relevant entrance exams or certifications"]
+      },
+      lawGovernment: {
+        icon: "LG",
+        field: "Law & Government",
+        title: "Policy and Justice Advocate",
+        roles: ["Lawyer", "Civil Servant", "Policy Analyst", "Legal Researcher"],
+        quote: "You care about rules, rights, fairness, and institutions. Your path fits work that needs reasoning, responsibility, and public trust.",
+        skills: ["Critical reading", "Debate and writing", "Research", "Ethical judgment", "Public policy awareness"],
+        path: ["Read landmark cases, policy explainers, and current affairs", "Practice structured writing and debate", "Join mock parliament, MUN, or legal aid activities", "Prepare for law, civics, or civil service pathways"]
+      },
+      educationPsychology: {
+        icon: "EP",
+        field: "Education & Psychology",
+        title: "Learning and People Specialist",
+        roles: ["Teacher", "Counselor", "Psychologist", "Learning Designer"],
+        quote: "You are energized by growth, behavior, and helping people understand themselves. This field blends empathy with practical structure.",
+        skills: ["Active listening", "Teaching methods", "Behavioral science", "Communication", "Assessment design"],
+        path: ["Study basic psychology and learning theory", "Tutor or mentor students regularly", "Practice observation and reflective journaling", "Explore counseling, teaching, or instructional design credentials"]
+      },
+      finance: {
+        icon: "FN",
+        field: "Finance",
+        title: "Financial Decision Analyst",
+        roles: ["Financial Analyst", "Investment Advisor", "Accountant", "Risk Analyst"],
+        quote: "You like clarity, numbers, and decisions under uncertainty. Finance rewards disciplined thinking, accuracy, and calm judgment.",
+        skills: ["Accounting basics", "Excel or spreadsheets", "Financial modeling", "Risk analysis", "Market awareness"],
+        path: ["Master percentages, compounding, accounting, and budgeting", "Track a mock investment portfolio", "Learn spreadsheet models and charts", "Explore commerce, CFA foundation topics, taxation, or analytics"]
+      },
+      mediaCommunication: {
+        icon: "MC",
+        field: "Media & Communication",
+        title: "Communication Strategist",
+        roles: ["Journalist", "Content Strategist", "PR Specialist", "Video Producer"],
+        quote: "You understand attention, voice, and audience. Your best work may happen where ideas need to be shaped, shared, and remembered.",
+        skills: ["Writing and editing", "Public speaking", "Audience research", "Video or audio production", "Campaign planning"],
+        path: ["Write or record something every week", "Study strong interviews, campaigns, and creators", "Learn editing tools and content analytics", "Build a portfolio across articles, videos, or campaigns"]
+      }
+    };
+
+    var skills = {
+      aiTech: {
+        text: "Build a tiny calculator, chatbot prompt, or data chart today.",
+        hint: "Keep it small, finish it, and write down what broke and how you fixed it."
+      },
+      designCreativity: {
+        text: "Redesign one app screen you use daily.",
+        hint: "Focus on spacing, hierarchy, contrast, and why each change helps the user."
+      },
+      businessEntrepreneurship: {
+        text: "Interview three people about one everyday problem.",
+        hint: "Do not pitch first. Listen for repeated pain points and willingness to pay."
+      },
+      healthcare: {
+        text: "Learn one body system and explain it in simple language.",
+        hint: "Clear explanations are a powerful sign of real understanding."
+      },
+      lawGovernment: {
+        text: "Read one current affairs issue from two different sources.",
+        hint: "Write the facts, the stakeholders, and the rule or policy question involved."
+      },
+      educationPsychology: {
+        text: "Teach one concept to a friend in five minutes.",
+        hint: "Notice where they get confused. That is where your explanation can improve."
+      },
+      finance: {
+        text: "Create a simple monthly budget or mock investment tracker.",
+        hint: "Separate needs, wants, savings, and risk. Numbers become useful when organized."
+      },
+      mediaCommunication: {
+        text: "Create a 60-second explainer about a topic you understand.",
+        hint: "Hook, one clear idea, example, and ending. Brevity is a real skill."
+      }
+    };
+
+    var currentQ = 0;
+    var answers = [];
+    var scores = {};
+
+    function emptyScores() {
+      var nextScores = {};
+      for (var i = 0; i < categories.length; i++) {
+        nextScores[categories[i]] = 0;
+      }
+      return nextScores;
+    }
+
+    function startQuiz() {
+      currentQ = 0;
+      answers = [];
+      scores = emptyScores();
+
+      document.getElementById("section-hero").classList.add("hidden");
+      document.getElementById("section-result").classList.add("hidden");
+      document.getElementById("section-skill").classList.add("hidden");
+      document.getElementById("section-quiz").classList.remove("hidden");
+
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      var q = questions[currentQ];
+      var pct = Math.round((currentQ / questions.length) * 100);
+
+      document.getElementById("progress-fill").style.width = pct + "%";
+      document.getElementById("q-number").textContent = "Question " + (currentQ + 1) + " of " + questions.length;
+      document.getElementById("q-text").textContent = q.text;
+      document.getElementById("btn-next").textContent = currentQ === questions.length - 1 ? "Show Result" : "Next";
+
+      renderDots();
+      renderOptions(q);
+      updateBackButton();
+      animateCard();
+    }
+
+    function renderDots() {
+      var dots = "";
+      for (var i = 0; i < questions.length; i++) {
+        var className = "step-dot";
+        if (i === currentQ) {
+          className += " active";
+        } else if (answers[i]) {
+          className += " done";
+        }
+        dots += '<span class="' + className + '" aria-hidden="true"></span>';
+      }
+      document.getElementById("step-dots").innerHTML = dots;
+    }
+
+    function renderOptions(q) {
+      var container = document.getElementById("q-options");
+      container.innerHTML = "";
+
+      for (var j = 0; j < q.options.length; j++) {
+        var opt = q.options[j];
+        var label = document.createElement("label");
+        label.className = "option-label";
+        if (answers[currentQ] === j) {
+          label.classList.add("selected");
+        }
+
+        var radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "q" + currentQ;
+        radio.value = String(j);
+        radio.checked = answers[currentQ] === j;
+
+        var span = document.createElement("span");
+        span.textContent = opt.label;
+
+        radio.addEventListener("change", function(optionIndex) {
+          return function() {
+            answers[currentQ] = optionIndex;
+            markSelectedOption(this.parentElement);
+            renderDots();
+          };
+        }(j));
+
+        label.appendChild(radio);
+        label.appendChild(span);
+        container.appendChild(label);
+      }
+    }
+
+    function markSelectedOption(selectedLabel) {
+      var allLabels = document.querySelectorAll(".option-label");
+      for (var i = 0; i < allLabels.length; i++) {
+        allLabels[i].classList.remove("selected");
+      }
+      selectedLabel.classList.add("selected");
+    }
+
+    function updateBackButton() {
+      var btnBack = document.getElementById("btn-back");
+      btnBack.style.visibility = currentQ === 0 ? "hidden" : "visible";
+    }
+
+    function animateCard() {
+      var card = document.getElementById("quiz-card");
+      card.style.opacity = "0";
+      card.style.transform = "translateY(12px)";
+      setTimeout(function() {
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+      }, 40);
+    }
+
+    function goBack() {
+      if (currentQ > 0) {
+        currentQ--;
+        renderQuestion();
+      }
+    }
+
+    function goNext() {
+      if (answers[currentQ] === undefined) {
+        alert("Please select an option before continuing.");
+        return;
+      }
+
+      if (currentQ < questions.length - 1) {
+        currentQ++;
+        renderQuestion();
+        return;
+      }
+
+      showResult();
+    }
+
+    function calculateScores() {
+      var nextScores = emptyScores();
+
+      for (var i = 0; i < answers.length; i++) {
+        var answerIndex = answers[i];
+        var answer = questions[i].options[answerIndex];
+        if (!answer) {
+          continue;
+        }
+
+        for (var type in answer.scores) {
+          if (Object.prototype.hasOwnProperty.call(answer.scores, type)) {
+            nextScores[type] += answer.scores[type];
+          }
+        }
+      }
+
+      return nextScores;
+    }
+
+    function getTopMatch(nextScores) {
+      var topType = categories[0];
+      var topScore = -1;
+      var secondScore = 0;
+
+      for (var i = 0; i < categories.length; i++) {
+        var type = categories[i];
+        var score = nextScores[type];
+        if (score > topScore) {
+          secondScore = topScore;
+          topScore = score;
+          topType = type;
+        } else if (score > secondScore) {
+          secondScore = score;
+        }
+      }
+
+      var maxPossible = questions.length * 5;
+      var confidenceBonus = Math.max(0, topScore - secondScore) * 2;
+      var compatibility = Math.round((topScore / maxPossible) * 78 + 18 + confidenceBonus);
+      compatibility = Math.max(62, Math.min(98, compatibility));
+
+      return {
+        type: topType,
+        score: topScore,
+        compatibility: compatibility
+      };
+    }
+
+    function showResult() {
+      scores = calculateScores();
+      var match = getTopMatch(scores);
+      var r = results[match.type];
+
+      document.getElementById("result-icon").textContent = r.icon;
+      document.getElementById("result-field").textContent = r.field;
+      document.getElementById("result-title").textContent = r.title;
+      document.getElementById("result-quote").textContent = r.quote;
+      document.getElementById("compatibility-score").textContent = match.compatibility + "%";
+
+      renderList("result-roles", r.roles, "span", "role-badge");
+      renderList("result-skills", r.skills, "li");
+      renderList("result-path", r.path, "li");
+
+      document.getElementById("skill-text").textContent = skills[match.type].text;
+      document.getElementById("skill-hint").textContent = skills[match.type].hint;
+      document.getElementById("progress-fill").style.width = "100%";
+
+      document.getElementById("section-quiz").classList.add("hidden");
+      document.getElementById("section-result").classList.remove("hidden");
+      document.getElementById("section-skill").classList.remove("hidden");
+
+      setTimeout(function() {
+        document.getElementById("compatibility-fill").style.width = match.compatibility + "%";
+      }, 120);
+
+      document.getElementById("section-result").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function renderList(id, items, tagName, className) {
+      var container = document.getElementById(id);
+      container.innerHTML = "";
+
+      for (var i = 0; i < items.length; i++) {
+        var el = document.createElement(tagName);
+        if (className) {
+          el.className = className;
+        }
+        el.textContent = items[i];
+        container.appendChild(el);
+      }
+    }
+
+    function resetQuiz() {
+      document.getElementById("section-result").classList.add("hidden");
+      document.getElementById("section-skill").classList.add("hidden");
+      document.getElementById("section-hero").classList.remove("hidden");
+      document.getElementById("compatibility-fill").style.width = "0";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
